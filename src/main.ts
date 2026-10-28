@@ -133,8 +133,17 @@ function requestHitTest(){
  session.requestReferenceSpace('viewer')
  .then(space=>session.requestHitTestSource!({space}))
  .then(hit=>{
-  if(renderer.xr.getSession()!==session){hit.cancel?.();return;}
-  source=hit;hitState='ready';
+  if(!hit){
+   hitState='failed';
+   setStatus('no-hit-source','El navegador no entregó un detector de superficies. La bola puede colocarse de manera aproximada.');
+   return;
+  }
+  if(renderer.xr.getSession()!==session){
+   hit.cancel();
+   return;
+  }
+  source=hit;
+  hitState='ready';
  })
  .catch(error=>{
   console.warn('AR Lab: no se pudo iniciar hit-test',error);
