@@ -192,6 +192,19 @@ export function setupArExperiment(): void {
     button.disabled = true;
     errorField.hidden = true;
     errorField.textContent = '';
+    overlay.hidden = false;
+    field('session').textContent = 'Solicitando acceso';
+    setMessage('Solicitando sesión WebXR y acceso a la cámara…');
+    let ready = false;
+    let phase: 'acceso' | 'render' = 'acceso';
+    const startupTimer = window.setTimeout(() => {
+      if (!ready) {
+        const context = phase === 'acceso'
+          ? 'La solicitud WebXR sigue pendiente tras 8 segundos'
+          : 'La cámara abrió, pero el render WebXR no terminó de iniciar en 8 segundos';
+        showError(context, new Error('Comprueba el seguimiento y los servicios de RA'));
+      }
+    }, 8000);
     let requestedSession: XRSession | null = null;
     try {
       requestedSession = await navigator.xr.requestSession('immersive-ar', {
@@ -199,8 +212,14 @@ export function setupArExperiment(): void {
         optionalFeatures: ['hit-test'],
         domOverlay: { root: overlay },
       });
+      phase = 'render';
+      field('session').textContent = 'Configurando render';
+      setMessage('Cámara autorizada. Configurando el render WebXR…');
       renderer.xr.setReferenceSpaceType('local');
       await renderer.xr.setSession(requestedSession);
+      ready = true;
+      errorField.hidden = true;
+      errorField.textContent = '';
       session = requestedSession;
       session.addEventListener('end', resetSession, { once: true });
       session.addEventListener('select', onSelect);
@@ -224,8 +243,11 @@ export function setupArExperiment(): void {
       showError('No se pudo iniciar la sesión AR', error);
       status.textContent = errorField.textContent;
       if (requestedSession) await requestedSession.end().catch(() => undefined);
+      overlay.hidden = true;
       button.disabled = false;
       button.textContent = 'START AR';
+    } finally {
+      window.clearTimeout(startupTimer);
     }
   };
 

@@ -47,3 +47,7 @@ Three.js — WebXR, sesión, render, pose, hit-test y objeto:
 ¿Apareció el anillo verde?:
 ¿La bola quedó en la superficie tras tocar?:
 Error visible o captura de pantalla:
+
+## Segunda observación del Samsung — pendiente de diagnóstico
+
+El usuario informó que la cámara vuelve a abrirse sin mostrar contenido. Aún falta saber si ocurre en Model Viewer, Three.js o ambos, y si aparece el panel de diagnóstico. Se añadió visibilidad del panel durante la solicitud e inicialización WebXR, con un aviso tras ocho segundos si la sesión o el render no terminan de iniciar. Para aislar el dispositivo del código de AR Lab, comparar con el ejemplo oficial [Barebones AR](https://immersive-web.github.io/webxr-samples/ar-barebones.html), que dibuja un rectángulo sin librerías ni hit-test. No se atribuye todavía el fallo a una capa concreta.
