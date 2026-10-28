@@ -48,6 +48,14 @@ Three.js — WebXR, sesión, render, pose, hit-test y objeto:
 ¿La bola quedó en la superficie tras tocar?:
 Error visible o captura de pantalla:
 
-## Segunda observación del Samsung — pendiente de diagnóstico
+## Segunda observación del Samsung — fallo compartido de WebXR
 
-El usuario informó que la cámara vuelve a abrirse sin mostrar contenido. Aún falta saber si ocurre en Model Viewer, Three.js o ambos, y si aparece el panel de diagnóstico. Se añadió visibilidad del panel durante la solicitud e inicialización WebXR, con un aviso tras ocho segundos si la sesión o el render no terminan de iniciar. Para aislar el dispositivo del código de AR Lab, comparar con el ejemplo oficial [Barebones AR](https://immersive-web.github.io/webxr-samples/ar-barebones.html), que dibuja un rectángulo sin librerías ni hit-test. No se atribuye todavía el fallo a una capa concreta.
+El usuario informó que la cámara vuelve a abrirse sin mostrar contenido en ambos experimentos. Se añadió visibilidad del panel durante la solicitud e inicialización WebXR, con un aviso tras ocho segundos si la sesión o el render no terminan de iniciar. Para aislar el dispositivo del código de AR Lab, se comparó con el ejemplo oficial [Barebones AR](https://immersive-web.github.io/webxr-samples/ar-barebones.html), que dibuja un rectángulo sin librerías ni hit-test.
+
+### Resultado comunicado
+
+- Ocurre en ambos experimentos.
+- En Three.js se observa sesión activa, 171 fotogramas, 4 llamadas de dibujo, pose disponible y centro de la bola dentro del campo de cámara. El hit-test está listo, sin resultados. La bola no aparece.
+- Model Viewer comunica `object-placed`, pero el modelo tampoco aparece. Ese evento no garantiza que haya píxeles del modelo visibles ni, en todos los modos, que se haya detectado una superficie.
+- El ejemplo externo Barebones AR tampoco muestra su rectángulo de color; solo cámara y textos. Al no usar código de AR Lab ni hit-test, esta prueba sitúa el problema probable en la ruta WebXR/Chrome/servicios de RA del dispositivo. Sigue sin determinarse cuál componente concreto falla.
+- Pendiente: registrar versiones de Android/One UI, Chrome y Servicios de Google Play para RA; actualizar componentes disponibles y repetir primero Barebones AR.

@@ -114,7 +114,7 @@ export function setupArExperiment(): void {
       inView = Math.abs(clipPosition.x) <= 1 && Math.abs(clipPosition.y) <= 1 && clipPosition.z >= -1 && clipPosition.z <= 1;
     }
     const placed = placement === 'vista previa flotante' ? 'sin colocar' : 'colocado';
-    field('object').textContent = `${ball.visible ? 'Visible en escena' : 'Oculto'} · ${placed}: ${placement} · posición (${formatPosition()}) m · ${inView ? 'en vista' : 'fuera de vista'}`;
+    field('object').textContent = `${ball.visible ? 'Activado en escena' : 'Oculto'} · ${placed}: ${placement} · posición (${formatPosition()}) m · ${inView ? 'centro dentro del campo de cámara' : 'centro fuera del campo de cámara'}`;
   };
 
   const resetSession = () => {

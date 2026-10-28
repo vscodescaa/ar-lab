@@ -23,7 +23,7 @@ viewer?.addEventListener('ar-status',(event:Event)=>{
  const status=(event as CustomEvent<{status:string}>).detail?.status;
  const descriptions:Record<string,string>={
   'session-started':'Sesión WebXR iniciada. Mueve el teléfono para encontrar una superficie.',
-  'object-placed':'Modelo colocado en realidad aumentada.',
+  'object-placed':'Model Viewer informó «object-placed». Comprueba si el modelo es visible; este estado no lo garantiza.',
   'failed':'No se pudo iniciar la realidad aumentada. Comprueba los Servicios de Google Play para RA y Chrome.',
   'not-presenting':'La sesión de realidad aumentada terminó.'
  };
