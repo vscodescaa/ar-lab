@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node scripts/create-model.mjs && vite --host 0.0.0.0",
     "build": "node scripts/create-model.mjs && tsc --noEmit && vite build",
+    "test": "node scripts/create-model.mjs && node --experimental-strip-types --test tests/*.test.mjs",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {

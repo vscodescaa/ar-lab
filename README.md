@@ -39,3 +39,13 @@ Para probar: abre el sitio publicado en Chrome, actualiza la página, pulsa «ST
 Si la experiencia web sigue fallando, comprueba en Google Play Store las actualizaciones de **Servicios de Google Play para RA** y **Google**, además de Chrome; no borres datos ni restablezcas el teléfono como primera medida.
 
 La bitácora se encuentra en `docs/experiment-log.md`. Las correcciones todavía requieren validación física.
+
+## Diagnóstico WebXR (versión actual)
+
+`npm ci`, `npm test` y `npm run build` verifican las dependencias, la posición de la vista previa y la compilación. La prueba física de AR sigue pendiente.
+
+En **Three.js + WebXR**, `START AR` comprueba soporte de `immersive-ar` y muestra un panel dentro de la cámara cuando Chrome concede DOM Overlay. El panel indica sesión, fotogramas y llamadas de dibujo, pose de cámara, estado y resultados de hit-test, visibilidad y posición de la bola, modo de colocación y errores. La bola antes del toque es una **vista previa flotante**. El anillo verde indica un resultado de hit-test; tocar en ese momento fija la bola en esa posición del espacio. Tocar sin anillo mantiene la colocación aproximada existente, claramente marcada como tal. Se usa una posición fija en el espacio WebXR, no la API opcional `XRAnchor`.
+
+En **Model Viewer**, `ar-modes="webxr"` evita abrir Scene Viewer. El aviso dentro del visor muestra inicio, pérdida de seguimiento y colocación; el estado bajo el visor muestra los mismos eventos al salir. Un error de carga del GLB también se muestra allí.
+
+Si la cámara aparece sin bola, anota los seis renglones del panel. En particular, `Pose: Sin seguimiento` significa que el navegador aún no entrega una posición válida; `Render: 0 fotogramas` apunta al bucle de render; `Hit-test: listo · 0 resultados` indica sesión y detector activos, pero ninguna superficie hallada; `Objeto: ... fuera de vista` indica un problema de posición o cámara. Registra esos valores en la bitácora.

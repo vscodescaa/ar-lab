@@ -28,3 +28,22 @@ Versiones Android y Servicios de Google Play para RA: pendientes.
 5. Registrar resultados, versión Android, Chrome, servicios RA, fallos y evidencia.
 
 No se han medido tiempos ni confirmado todavía experiencias AR completas.
+
+## Auditoría de código — 28 de octubre de 2026
+
+- La primera implementación ocultaba la bola hasta obtener hit-test. La revisión posterior añadió una vista previa, pero calculaba su posición con la cámara XR de Three.js antes del render del fotograma; por ello dependía del estado anterior de esa cámara. La causa del resultado real en el S20 FE aún no se puede confirmar sin repetir la prueba.
+- El botón AR de Three.js no muestra en la página los rechazos de `requestSession`. El experimento ahora solicita la sesión directamente, informa el error y deja `hit-test` como función opcional: una sesión AR puede iniciar aunque la detección de superficies no esté disponible.
+- La vista previa se calcula desde `XRFrame.getViewerPose()` en el mismo fotograma. El panel separa falta de pose, falta de render, falta de resultados hit-test, objeto fuera de vista y colocación aproximada. El resultado físico permanece pendiente.
+- El GLB se genera localmente con Three.js y ambos experimentos usan la misma URL, ajustada con la ruta base de Vite para GitHub Pages. La carga 3D había funcionado en la primera prueba; la experiencia AR de Model Viewer todavía requiere nueva prueba.
+
+### Registro para la próxima prueba
+
+Fecha y hora:
+Android / Chrome / Servicios de Google Play para RA:
+URL y commit:
+Model Viewer — estado inicial, al tocar, seguimiento y resultado:
+Three.js — WebXR, sesión, render, pose, hit-test y objeto:
+¿Se vio la bola flotante?:
+¿Apareció el anillo verde?:
+¿La bola quedó en la superficie tras tocar?:
+Error visible o captura de pantalla:
